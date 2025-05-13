@@ -75,7 +75,7 @@ public class MetroTicketController {
 	@PutMapping("/updateticket")
 	public ResponseEntity<String> UpdateMetroTicket(@RequestBody MetroTicketInfo ticketbooking)
 	{
-MetroTicketInfo mt=new MetroTicketInfo();
+		MetroTicketInfo mt=new MetroTicketInfo();
 		
 		mt.setTicketNumber(ticketbooking.getTicketNumber());
 		

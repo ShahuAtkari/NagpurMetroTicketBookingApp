@@ -10,6 +10,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -64,6 +66,7 @@ public class MetroTicketViewController {
 		
 		@RequestMapping("/registershow")
 		public String register(Model model) {
+			
 		    model.addAttribute("passenger", new PassengerInfo());
 		    return "Register";
 		}
@@ -118,7 +121,13 @@ public class MetroTicketViewController {
 
 	
 	    @PostMapping("/registerUI")
-	    public String RegisterPassenger(@ModelAttribute("passenger") PassengerInfo info, Model model) {
+	    public String RegisterPassenger(@Validated @ModelAttribute("passenger") PassengerInfo info, BindingResult result, Model model)
+ {
+	    	
+	    	if(result.hasErrors())
+			{
+				return "Register";
+			}
 	        model.addAttribute("passenger", metroticketservice.RegisterPassenger(info));
 	        return "new";
 	    }

@@ -15,28 +15,49 @@
             <h3 class="text-center mb-4">Register Form</h3>
 
            <form th:action="@{/registerUI}" th:object="${passenger}" method="POST">
+           
+           
+	<div class="mb-0">
+	<label th:if="${#fields.hasErrors('passengerFirstName')}" th:errors="*{passengerFirstName}" class="text-danger"></label>
+	</div>
 
     <div class="mb-3">
         <label for="firstName" class="form-label">First Name</label>
         <a href="/" class="btn btn-link" style="margin-left:200px;">Login</a>
         <input type="text" class="form-control" id="firstName" th:field="*{passengerFirstName}">
     </div>
+    
+    <div class="mb-0">
+	<label th:if="${#fields.hasErrors('passengerLastName')}" th:errors="*{passengerLastName}" class="text-danger"></label>
+	</div>
 
     <div class="mb-2">
         <label for="lastName" class="form-label">Last Name</label>
         <input type="text" class="form-control" id="lastName" th:field="*{passengerLastName}">
     </div>
+    
+    <div class="mb-0">
+	<label th:if="${#fields.hasErrors('passengerMobile')}" th:errors="*{passengerMobile}" class="text-danger"></label>
+	</div>
 
     <div class="mb-2">
         <label for="mobileNo" class="form-label">Mobile</label>
         <input type="text" class="form-control" id="mobileNo" th:field="*{passengerMobile}">
     </div>
+    
+    <div class="mb-0">
+	<label th:if="${#fields.hasErrors('passengerEmail')}" th:errors="*{passengerEmail}" class="text-danger"></label>
+	</div>
 
     <div class="mb-1">
-        <label for="InputEmail1" class="form-label">Email address</label>
+        <label for="InputEmail1" class="form-label">Email</label>
         <input type="email" class="form-control" id="InputEmail1" th:field="*{passengerEmail}">
         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
     </div>
+    
+    <div class="mb-0">
+	<label th:if="${#fields.hasErrors('passengerPassword')}" th:errors="*{passengerPassword}" class="text-danger"></label>
+	</div>
 
     <div class="mb-3">
         <label for="password" class="form-label">Password</label>
