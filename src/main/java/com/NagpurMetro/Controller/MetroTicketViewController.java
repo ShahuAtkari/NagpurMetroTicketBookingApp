@@ -57,9 +57,9 @@ public class MetroTicketViewController {
 			}
 
 		
-		@RequestMapping("/home")
-	    public String home() {
-	        return "home";
+		@RequestMapping("/updatePassword")
+	    public String Updatepassword() {
+	        return "updatePassword";
 	    }
 		
 		@RequestMapping("/registershow")
