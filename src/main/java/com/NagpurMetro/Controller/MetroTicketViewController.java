@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,10 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.NagpurMetro.Binding.MetroTicketBook;
 import com.NagpurMetro.Binding.MetroTicketInfo;
 import com.NagpurMetro.Binding.PassengerInfo;
+import com.NagpurMetro.Service.LoginValidationGroup;
 import com.NagpurMetro.Service.MetroTicketService;
 import com.NagpurMetro.ServiceImpl.ValidData;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -126,6 +130,7 @@ public class MetroTicketViewController {
 	    	
 	    	if(result.hasErrors())
 			{
+	    		System.out.println("Error in Register form : "+result.hasErrors());
 				return "Register";
 			}
 	        model.addAttribute("passenger", metroticketservice.RegisterPassenger(info));
@@ -133,18 +138,44 @@ public class MetroTicketViewController {
 	    }
 
 	    @PostMapping("/loginUI")
-		public String LoginPassenger(@ModelAttribute("passenger") PassengerInfo info, Model model)
+		public String LoginPassenger(@Validated(LoginValidationGroup.class) @ModelAttribute("passenger") PassengerInfo info, BindingResult result , Model model)
 		{
+	    	boolean status=false;
+	    	
+	    	if(result.hasErrors())
+	    	{
+	    		return "index";
+	    	}
+	   
+	    	
 			UsernamePasswordAuthenticationToken token=new UsernamePasswordAuthenticationToken(info.getPassengerEmail(), info.getPassengerPassword());
+			System.out.println("============token "+token);
 			
-			org.springframework.security.core.Authentication authenticateuser=authmanager.authenticate(token);
+			try 
+			{
+					org.springframework.security.core.Authentication authenticateuser=authmanager.authenticate(token);
+					status=authenticateuser.isAuthenticated();
+			}
+			catch (Exception e) {
 				
-				boolean status=authenticateuser.isAuthenticated();
+				model.addAttribute("msg", "Email or Password Incorrect");
+				return "index";
+
 				
+			}
+			
+				
+				System.out.println("---------"+status);
 				if(status)
-					return "new";
+				{
+					return "redirect:/tkt/new";
+				}
 				else
-					return "check the email or password";
+				{
+					model.addAttribute("msg", "Email or Password Incorrect");
+					return "index";
+				}
+			
 				
 		}
 }

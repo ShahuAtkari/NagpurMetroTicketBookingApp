@@ -15,6 +15,15 @@
             <h3 class="text-center mb-4">Login Form</h3>
 
             <form th:action="@{/loginUI}" th:object="${passenger}" method="POST">
+              
+               	 <div class="mb-0">
+					<label th:text="${msg}" class="text-danger"></label>
+				 </div>
+            
+
+				 <div class="mb-0">
+					<label th:if="${#fields.hasErrors('passengerEmail')}" th:errors="*{passengerEmail}" class="text-danger"></label>
+				 </div>
 
                <div class="mb-3">
                 <label for="InputEmail1" class="form-label">Email address</label>
@@ -22,6 +31,9 @@
                 <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
 
+				<div class="mb-0">
+					<label th:if="${#fields.hasErrors('passengerPassword')}" th:errors="*{passengerPassword}" class="text-danger"></label>
+				</div>
           
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>

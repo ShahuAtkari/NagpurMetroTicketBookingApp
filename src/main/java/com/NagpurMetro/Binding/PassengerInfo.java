@@ -1,5 +1,7 @@
 package com.NagpurMetro.Binding;
 
+import com.NagpurMetro.Service.LoginValidationGroup;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,12 +40,11 @@ public class PassengerInfo {
 	private String passengerMobile;
 	
 	@Column(name="Email")
-	@NotBlank(message= "provide valid Email")
-	@Email(message = "provide valid Email")
+	@NotBlank(message= "Email can not be empty",groups=LoginValidationGroup.class)
 	private String passengerEmail;
 	
 	@Column(name="Password")
-	@NotBlank(message = "please provide valid Password")
+	@NotBlank(message = "please provide valid Password",groups=LoginValidationGroup.class)
 	private String passengerPassword;
 	
 
