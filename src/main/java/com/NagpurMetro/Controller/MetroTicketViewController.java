@@ -130,7 +130,6 @@ public class MetroTicketViewController {
 	    	
 	    	if(result.hasErrors())
 			{
-	    		System.out.println("Error in Register form : "+result.hasErrors());
 				return "Register";
 			}
 	        model.addAttribute("passenger", metroticketservice.RegisterPassenger(info));
@@ -147,9 +146,7 @@ public class MetroTicketViewController {
 	    		return "index";
 	    	}
 	   
-	    	
 			UsernamePasswordAuthenticationToken token=new UsernamePasswordAuthenticationToken(info.getPassengerEmail(), info.getPassengerPassword());
-			System.out.println("============token "+token);
 			
 			try 
 			{
@@ -159,13 +156,8 @@ public class MetroTicketViewController {
 			catch (Exception e) {
 				
 				model.addAttribute("msg", "Email or Password Incorrect");
-				return "index";
-
-				
+				return "index";	
 			}
-			
-				
-				System.out.println("---------"+status);
 				if(status)
 				{
 					return "redirect:/tkt/new";
