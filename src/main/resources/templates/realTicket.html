@@ -38,8 +38,8 @@
 		  </div>
 
 		 <div class="mb-0 d-flex">
-    		<label for="sourceStation" class="form-label me-3" style="width: 200px; color:black; margin: 0px" th:text="${newTicket.boardingStation}">Sitabuldi</label>
-    		<label for="destinationStation" class="form-label" style="width: 200px; color:black; margin: 0px" th:text="${newTicket.destinationStation}">Telephone Exchange</label>
+    		<label for="sourceStation" class="form-label me-3" style="width: 200px; color:black; margin: 0px" th:text="${newTicket.boardingStation}"></label>
+    		<label for="destinationStation" class="form-label" style="width: 200px; color:black; margin: 0px" th:text="${newTicket.destinationStation}"></label>
 		</div>
 
 		<div class="mb-0 d-flex">
@@ -48,7 +48,7 @@
 		</div>
 
 		<div class="mb-0 d-flex">
-    		<label for="journeyType" class="form-label me-3" style="width: 300px; color:black; margin: 0px;">Single</label>
+    		<label for="journeyType" class="form-label me-3" style="width: 300px; color:black; margin: 0px;" th:text="${newTicket.journeyType}"></label>
     		<label for="validTill" class="form-label" style="width: 300px; color:black; margin: 0px;" th:text="${newTicket.ticketValidity}"></label>
 		</div>
 		
@@ -58,8 +58,8 @@
 		</div>
 		
 		<div class="mb-2 d-flex">
-    		<label for="journeyType" class="form-label me-3" style="width: 300px; color:black; margin: 0px" th:text="${newTicket.transactionId}"></label>
-    		<label for="validTill" class="form-label" style="width: 300px; color:black; margin: 0px" th:text="${newTicket.platformNumer}"></label>
+    		<label for="transactionId" class="form-label me-3" style="width: 300px; color:black; margin: 0px" th:text="${newTicket.transactionId}"></label>
+    		<label for="platformnumber" class="form-label" style="width: 300px; color:black; margin: 0px" th:text="${newTicket.platformNumber}"></label>
 		</div>
 
         <button type="button" class="btn btn-primary w-100" onclick="window.location.href='/tkt/new'">Book Ticket Now</button>

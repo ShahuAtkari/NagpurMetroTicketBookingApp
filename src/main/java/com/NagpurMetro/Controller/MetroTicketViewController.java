@@ -21,6 +21,7 @@ import com.NagpurMetro.Binding.MetroTicketInfo;
 import com.NagpurMetro.Binding.PassengerInfo;
 import com.NagpurMetro.Service.LoginValidationGroup;
 import com.NagpurMetro.Service.MetroTicketService;
+import com.NagpurMetro.Service.RegisterValidationGroup;
 import com.NagpurMetro.ServiceImpl.ValidData;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -94,38 +95,8 @@ public class MetroTicketViewController {
 	    	return "new";
 	    }
 	    
-	    @PostMapping("/ticketdata")
-	    public String CreateMetroTicket(@ModelAttribute("bookingdataXML") MetroTicketBook ticketbook,org.springframework.ui.Model model) throws Exception {
-	        MetroTicketInfo mt = new MetroTicketInfo();
-
-	        mt.setTicketNumber(ValidData.generateTicket());
-	        mt.setBoardingStation(ValidData.checkBoardingStation(ticketbook.getBoardingStation()));
-	        mt.setDestinationStation(ValidData.checkBoardingStation(ticketbook.getDestinationStation()));
-	        mt.setNumberofPassenger(ticketbook.getNumberofPassenger());
-	        mt.setPlatformNumer(2);
-	        mt.setTicketPrice(ValidData.CalculateTicketPrice(ticketbook.getBoardingStation(), ticketbook.getDestinationStation()) * mt.getNumberofPassenger());
-	        mt.setTransactionId(ValidData.GenerateTransactionId());
-	        mt.setBookingTime(ValidData.BookTimes());
-	        mt.setTicketValidity(ValidData.ValidTimes());
-
-	        metroticketservice.CreateTicket(mt);
-	        
-	       
-	        model.addAttribute("qrCodeContent", "/generateQRCode?qrContent=" + mt.getTicketNumber());
-	        model.addAttribute("newTicket", mt);
-	        
-	        return "realTicket";
-//	        return  "redirect:/successPage";
-	    }
-	    
-//	    @GetMapping("/successPage")
-//	    public String ticketSuccessPage() {
-//	        return "realTicket";
-//	    }
-
-	
 	    @PostMapping("/registerUI")
-	    public String RegisterPassenger(@Validated @ModelAttribute("passenger") PassengerInfo info, BindingResult result, Model model)
+	    public String RegisterPassenger(@Validated(RegisterValidationGroup.class) @ModelAttribute("passenger") PassengerInfo info, BindingResult result, Model model)
  {
 	    	
 	    	if(result.hasErrors())
@@ -155,7 +126,7 @@ public class MetroTicketViewController {
 			}
 			catch (Exception e) {
 				
-				model.addAttribute("msg", "Email or Password Incorrect");
+				model.addAttribute("msg", "email or password Incorrect");
 				return "index";	
 			}
 				if(status)
@@ -164,12 +135,47 @@ public class MetroTicketViewController {
 				}
 				else
 				{
-					model.addAttribute("msg", "Email or Password Incorrect");
+					model.addAttribute("msg", "Email or Password wrong");
 					return "index";
-				}
-			
-				
+				}	
 		}
+	    
+	    @PostMapping("/ticketdata")
+	    public String CreateMetroTicket(@Valid @ModelAttribute("bookingdataXML") MetroTicketBook ticketbook,BindingResult result,org.springframework.ui.Model model) throws Exception {
+	       
+	    	if(result.hasErrors())
+	    	{
+	    		return "new";
+	    	}
+	    	
+	    	MetroTicketInfo mt = new MetroTicketInfo();
+
+	        mt.setTicketNumber(ValidData.generateTicket());
+	        mt.setBoardingStation(ValidData.checkBoardingStation(ticketbook.getBoardingStation()));
+	        mt.setDestinationStation(ValidData.checkBoardingStation(ticketbook.getDestinationStation()));
+	        mt.setNumberofPassenger(ticketbook.getNumberofPassenger());
+	        mt.setJourneyType(ValidData.JourneyType(ticketbook.getNumberofPassenger()));
+	        mt.setPlatformNumber(2);
+	        mt.setTicketPrice(ValidData.CalculateTicketPrice(ticketbook.getBoardingStation(), ticketbook.getDestinationStation()) * mt.getNumberofPassenger());
+	        mt.setTransactionId(ValidData.GenerateTransactionId());
+	        mt.setBookingTime(ValidData.BookTimes());
+	        mt.setTicketValidity(ValidData.ValidTimes());
+
+	        metroticketservice.CreateTicket(mt);
+	        
+	       
+	        model.addAttribute("qrCodeContent", "/generateQRCode?qrContent=" + mt.getTicketNumber());
+	        
+	        model.addAttribute("newTicket", mt);
+	        
+	        return "realTicket";
+          // return  "redirect:/successPage";
+	    }
+	    
+//	    @GetMapping("/successPage")
+//	    public String ticketSuccessPage() {
+//	        return "realTicket";
+//	    }
 }
 	    
 

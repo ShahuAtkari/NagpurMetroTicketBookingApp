@@ -2,6 +2,7 @@ package com.NagpurMetro.ServiceImpl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -163,10 +164,10 @@ public class ValidData {
 		    }
 
 		    if (!found) {
-		        throw new IllegalArgumentException("please provide valid Metro Boarding station.");
+		        throw new IllegalArgumentException("please provide valid Metro Destination station.");
 		    }
 		} else {
-		    throw new IllegalArgumentException("Boarding station is null or empty.");
+		    throw new IllegalArgumentException("Destination station is null or empty.");
 		}
 		return stationname;
 	}
@@ -223,9 +224,9 @@ public class ValidData {
 				
 		Integer sum=0;
 		sum=Math.abs(stationmap.get(boardingstation)-stationmap.get(destinationStation));
-		System.out.println("total "+sum);
+		
 		Map<Integer, Integer> prices=new TreeMap<Integer, Integer>();
-		prices.put(0, 0);
+		//prices.put(0, 0);
 		prices.put(1, 10);
 		prices.put(2, 10);
 		prices.put(3, 10);
@@ -297,23 +298,34 @@ public class ValidData {
 	        
 			
 	           LocalDateTime bookingTime = LocalDateTime.now();
-	           DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm a");
+	           DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd MMM yyyy, hh:mm a");
 	           String formattedDate = bookingTime.format(myFormatObj);
 	           return formattedDate;
 	        
 	  }
 	    public static String ValidTimes() {
 	        
-	    	LocalDateTime bookingTime = LocalDateTime.now();
-	    	LocalDateTime validtime = bookingTime.plusHours(9);
-	           
-	    	 DateTimeFormatter formatdate = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm a");
-	    	 
-	    	 String formateddate=validtime.format(formatdate); 
+	    	 LocalTime fixedTime = LocalTime.of(23, 30); 
+
+	         LocalDate today = LocalDate.now();
+	         LocalDateTime dateTime = LocalDateTime.of(today, fixedTime);
+
+	         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, hh:mm a");
+	        
+	    	 String formateddate=dateTime.format(formatter); 
 	           return formateddate;
 	        
 	  }
-	             // Valid for
+	             
+	    
+	   public static String JourneyType(Integer numberofPassenger)
+	   {
+		   if(numberofPassenger>1)
+		   
+			   return "Group";
+		   else
+			   return "Single";
+	   }
 	      
 
 }

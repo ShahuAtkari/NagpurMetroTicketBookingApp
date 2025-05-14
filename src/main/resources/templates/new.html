@@ -16,7 +16,16 @@
 
             <form th:action="@{/ticketdata}" th:object="${bookingdataXML}" method="POST">
 
+				 <div class="mb-3">
+					<label th:if="${mig}" th:text="${mig}" class="text-danger"></label>
+				 </div>
+
                 <!-- Boarding Station -->
+                
+                <div class="mb-0">
+					<label th:if="${#fields.hasErrors('boardingStation')}" th:errors="*{boardingStation}" class="text-danger"></label>
+				</div>
+                
                 <div class="mb-3">
                     <label for="boardingStation" class="form-label">Boarding Station</label>
                     <select class="form-select custom-dropdown" name="boardingStation" id="boardingStation">
@@ -61,6 +70,10 @@
                         <option>PRAJAPATI NAGAR</option>
                     </select>
                 </div>
+
+				<div class="mb-0">
+					<label th:if="${#fields.hasErrors('destinationStation')}" th:errors="*{destinationStation}" class="text-danger"></label>
+				</div>
 
                 <!-- Destination Station -->
                 <div class="mb-3">
@@ -109,6 +122,10 @@
                     </select>
                 </div>
 
+				<div class="mb-0">
+					<label th:if="${#fields.hasErrors('numberofPassenger')}" th:errors="*{numberofPassenger}" class="text-danger"></label>
+				</div>
+				
                 <!-- Passenger Count -->
                 <div class="mb-3">
                     <label for="numberofPassenger" class="form-label">No of Passenger</label>

@@ -56,7 +56,7 @@ public class MetroTicketController {
 		
 		mt.setNumberofPassenger(ticketbooking.getNumberofPassenger());
 		
-		mt.setPlatformNumer(2);
+		mt.setPlatformNumber(2);
 		
 		mt.setTicketPrice(ValidData.CalculateTicketPrice(ticketbooking.getBoardingStation(),ticketbooking.getDestinationStation())*mt.getNumberofPassenger());
 		
@@ -85,7 +85,7 @@ public class MetroTicketController {
 		
 		mt.setNumberofPassenger(ticketbooking.getNumberofPassenger());
 		
-		mt.setPlatformNumer(ticketbooking.getPlatformNumer());
+		mt.setPlatformNumber(ticketbooking.getPlatformNumber());
 		
 		mt.setTicketPrice(ticketbooking.getTicketPrice());
 		

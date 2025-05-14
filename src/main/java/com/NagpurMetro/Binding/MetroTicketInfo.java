@@ -10,6 +10,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 @Data
 @Entity
@@ -24,6 +26,7 @@ public class MetroTicketInfo {
 	private String boardingStation;
 	
 	@Column(name="Destination_Station")
+	
 	private String destinationStation;
 	
 	@Column(name="Ticket_Price")
@@ -36,7 +39,7 @@ public class MetroTicketInfo {
 	private Integer numberofPassenger;
 	
 	@Column(name="Platform_Number")
-	private Integer platformNumer;
+	private Integer platformNumber;
 	
 	
 	@Column(name="Booking_Time")
@@ -45,6 +48,8 @@ public class MetroTicketInfo {
 
 	@Column(name="Ticket_Validity")
 	private String ticketValidity;
+	
+	private String journeyType;
 	
 
 	public void setTicketPrice(String boardingStation2, String destinationStation2) {
