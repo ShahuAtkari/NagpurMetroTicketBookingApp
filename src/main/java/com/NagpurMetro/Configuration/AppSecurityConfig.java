@@ -57,7 +57,7 @@ public class AppSecurityConfig {
 	{
 		http.authorizeHttpRequests(request->{
 			
-			request.requestMatchers("/","/tkt/ListTicket","/updatePassword","/generateQRCode","/successPage","/ticketdata","/registerUI","/ListTicket","/login","/register","/registershow","/loginUI","/tkt/new")
+			request.requestMatchers("/loginpage","/","/images/**","/tkt/ListTicket","/updatePassword","/generateQRCode","/successPage","/ticketdata","/registerUI","/ListTicket","/login","/register","/registershow","/loginUI","/tkt/new")
 			.permitAll()
 			.anyRequest()
 			.authenticated();

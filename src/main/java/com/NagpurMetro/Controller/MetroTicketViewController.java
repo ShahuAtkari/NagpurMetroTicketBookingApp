@@ -57,10 +57,16 @@ public class MetroTicketViewController {
 
 		
 		
-		@RequestMapping("/")
+		@RequestMapping("/loginpage")
 		public String index(Model model) {
 			model.addAttribute("passenger", new PassengerInfo()); // Important!
 			return "index";
+			}
+		
+		@RequestMapping("/")
+		public String home(Model model) {
+			model.addAttribute("passenger", new PassengerInfo()); // Important!
+			return "home";
 			}
 
 		
@@ -97,14 +103,14 @@ public class MetroTicketViewController {
 	    
 	    @PostMapping("/registerUI")
 	    public String RegisterPassenger(@Validated(RegisterValidationGroup.class) @ModelAttribute("passenger") PassengerInfo info, BindingResult result, Model model)
- {
+	    {
 	    	
 	    	if(result.hasErrors())
 			{
 				return "Register";
 			}
 	        model.addAttribute("passenger", metroticketservice.RegisterPassenger(info));
-	        return "new";
+	        return "redirect:/tkt/new";
 	    }
 
 	    @PostMapping("/loginUI")
@@ -116,15 +122,15 @@ public class MetroTicketViewController {
 	    	{
 	    		return "index";
 	    	}
-	   
 			UsernamePasswordAuthenticationToken token=new UsernamePasswordAuthenticationToken(info.getPassengerEmail(), info.getPassengerPassword());
-			
 			try 
 			{
 					org.springframework.security.core.Authentication authenticateuser=authmanager.authenticate(token);
 					status=authenticateuser.isAuthenticated();
+					
 			}
-			catch (Exception e) {
+			catch (Exception e)
+			{
 				
 				model.addAttribute("msg", "email or password Incorrect");
 				return "index";	
